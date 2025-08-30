@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JustAttract | Discover Amazing Places</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #f59e0b;
+      --accent: #ec4899;
+      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --input-bg: rgba(255, 255, 255, 0.9);
+      --input-border: rgba(99, 102, 241, 0.2);
+      --text: #1f2937;
+      --text-light: #6b7280;
+      --success: #10b981;
+      --error: #ef4444;
+      --shadow-soft: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-strong: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --border-radius: 1.5rem;
+      --animation-speed: 0.3s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .bg-decoration {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-circle {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(236, 72, 153, 0.1), rgba(99, 102, 241, 0.1));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .bg-circle:nth-child(1) {
+      top: -150px;
+      right: -150px;
+      animation-delay: -2s;
+    }
+
+    .bg-circle:nth-child(2) {
+      bottom: -150px;
+      left: -150px;
+      animation-delay: -4s;
+      background: linear-gradient(45deg, rgba(245, 158, 11, 0.1), rgba(16, 185, 129, 0.1));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(120deg); }
+      66% { transform: translateY(15px) rotate(240deg); }
+    }
+
+    .main-container {
+      display: flex;
+      max-width: 1400px;
+      min-height: 700px;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-strong);
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-section {
+      flex: 1.2;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #ffffff, #f0f0f0);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: slideInUp 0.8s ease-out;
+    }
+
+    .hero-section .tagline {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      font-weight: 300;
+      animation: slideInUp 0.8s ease-out 0.2s both;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 500px;
+      animation: slideInUp 0.8s ease-out 0.4s both;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .feature-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: white;
+    }
+
+    .form-container {
+      max-width: 450px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-header h2 {
+      font-size: 2.2rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-header p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .step {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .step.active {
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+
+    .step.completed {
+      background: var(--success);
+    }
+
+    .form-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .required {
+      color: var(--error);
+      margin-left: 0.25rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--input-border);
+      border-radius: 0.75rem;
+      background: var(--input-bg);
+      font-size: 1rem;
+      transition: all var(--animation-speed) ease;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--animation-speed) ease;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .form-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--animation-speed) ease;
+    }
+
+    .form-footer a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .message {
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+      animation: slideInDown 0.3s ease;
+    }
+
+    .message.success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .message.error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .verify-code-input {
+      font-size: 1.5rem;
+      letter-spacing: 0.5rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .loading {
+      position: relative;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    @keyframes spin {
+      to {
+        transform: translateY(-50%) rotate(360deg);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .main-container {
+        flex-direction: column;
+        min-height: auto;
+      }
+      
+      .hero-section {
+        padding: 2rem 1rem;
+      }
+      
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+      }
+      
+      .main-container {
+        border-radius: 1rem;
+      }
+      
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-section .tagline {
+        font-size: 1.1rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-section {
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-card {
+        padding: 1.5rem;
+      }
+      
+      .form-header h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+  </div>
+
+  <div class="main-container">
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1>JustAttract</h1>
+        <p class="tagline">Discover & Share Amazing Places Around You</p>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🏞️</div>
+            <div class="feature-title">Discover</div>
+            <div class="feature-desc">Find hidden gems and popular spots</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📸</div>
+            <div class="feature-title">Share</div>
+            <div class="feature-desc">Post photos and reviews</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <div class="feature-title">Explore</div>
+            <div class="feature-desc">Location-based recommendations</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <div class="feature-title">Connect</div>
+            <div class="feature-desc">Join a community of explorers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-container">
+        <div id="registrationCard">
+          <div class="form-header">
+            <h2>Join the Adventure</h2>
+            <p>Create your account and start exploring</p>
+          </div>
+          
+          <div class="step-indicator">
+            <div class="step active"></div>
+            <div class="step"></div>
+          </div>
+
+          <div class="form-card">
+            <div id="formMessage" class="message"></div>
+            
+            <form id="registerForm" autocomplete="off">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="firstName">First Name <span class="required">*</span></label>
+                  <div class="input-wrapper">
+                    <input id="firstName" type="text" required placeholder="Himanshu">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name <span class="required">*</span></label>
+                  <div class="input-wrapper">
+                    <input id="lastName" type="text" required placeholder="Kandpal">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input id="email" type="email" required placeholder="himanshu@example.com">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input id="password" type="password" required minlength="8" placeholder="Minimum 8 characters">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="dob">Date of Birth</label>
+                  <div class="input-wrapper">
+                    <input id="dob" type="date">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="gender">Gender</label>
+                  <div class="input-wrapper">
+                    <select id="gender">
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                      <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <div class="input-wrapper">
+                  <input id="phone" type="tel" placeholder="941171****">
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary" id="registerBtn">
+                Create My Account
+              </button>
+            </form>
+
+            <div class="form-footer">
+              Already exploring with us? <a href="loginfinal.html">Sign in here →</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="verificationCard" style="display: none;">
+          <div class="form-header">
+            <h2>Almost There!</h2>
+            <p>Check your email for the verification code</p>
+          </div>
+          
+          <div class="step-indicator">
+            <div class="step completed"></div>
+            <div class="step active"></div>
+          </div>
+
+          <div class="form-card">
+            <div id="verifyMessage" class="message"></div>
+            
+            <p style="text-align: center; margin-bottom: 1.5rem; color: var(--text-light);">
+              We sent a verification code to<br>
+              <strong id="verificationEmail" style="color: var(--primary);"></strong>
+            </p>
+            <p style="text-align: center; margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-light);">
+              <em>For testing purposes, use code: <strong style="color: var(--secondary);">9999</strong></em>
+            </p>
+
+            <form id="verifyForm" autocomplete="off">
+              <div class="form-group">
+                <label for="verificationCode">Verification Code <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input id="verificationCode" maxlength="6" minlength="4" type="text" 
+                         pattern="[0-9]*" class="verify-code-input" placeholder="1234" required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary" id="verifyBtn">
+                Verify & Complete Registration
+              </button>
+            </form>
+
+            <div class="form-footer">
+              <a href="#" id="registerAgainLink">← Back to registration</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const REGISTER_API_URL = 'https://app-walks-northindia-dev-001-f4cud2g4fsahcpfw.westindia-01.azurewebsites.net/api/v1/register';
+    const VERIFY_API_URL = 'https://app-walks-northindia-dev-001-f4cud2g4fsahcpfw.westindia-01.azurewebsites.net/api/v1/verify';
+    let registeredEmail = "";
+
+    document.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.parentElement.style.transform = 'translateY(-2px)';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.parentElement.style.transform = 'translateY(0)';
+      });
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const registerBtn = document.getElementById('registerBtn');
+      const msgDiv = document.getElementById('formMessage');
+      
+      registerBtn.classList.add('loading');
+      registerBtn.disabled = true;
+      registerBtn.textContent = 'Creating Account...';
+      
+      const data = {
+        firstName: form.firstName.value.trim(),
+        lastName: form.lastName.value.trim(),
+        email: form.email.value.trim(),
+        password: form.password.value,
+        dob: form.dob.value,
+        gender: form.gender.value,
+        phone: form.phone.value.trim()
+      };
+
+      msgDiv.className = 'message';
+      msgDiv.style.display = 'none';
+
+      try {
+        const response = await fetch(REGISTER_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          registeredEmail = data.email;
+          msgDiv.textContent = "🎉 Registration successful! Please check your email for verification.";
+          msgDiv.className = 'message success';
+          msgDiv.style.display = 'block';
+          
+          setTimeout(() => showVerificationForm(registeredEmail), 1500);
+        } else {
+          throw new Error(result.error || "Registration failed. Please try again.");
+        }
+      } catch (err) {
+        msgDiv.textContent = "❌ " + (err.message || "Network error. Please check your connection and try again.");
+        msgDiv.className = 'message error';
+        msgDiv.style.display = 'block';
+      } finally {
+        registerBtn.classList.remove('loading');
+        registerBtn.disabled = false;
+        registerBtn.textContent = 'Create My Account';
+      }
+    });
+
+    function showVerificationForm(email) {
+      document.getElementById('registrationCard').style.display = 'none';
+      document.getElementById('verificationCard').style.display = 'block';
+      document.getElementById('verificationEmail').textContent = email;
+      document.getElementById('verifyMessage').style.display = 'none';
+      document.getElementById('verificationCode').value = '';
+      document.getElementById('verificationCode').focus();
+    }
+
+    document.getElementById('registerAgainLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('verificationCard').style.display = 'none';
+      document.getElementById('registrationCard').style.display = 'block';
+      document.getElementById('formMessage').style.display = 'none';
+      document.getElementById('registerForm').reset();
+    });
+
+    document.getElementById('verifyForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const code = document.getElementById('verificationCode').value.trim();
+      const email = registeredEmail;
+      const verifyBtn = document.getElementById('verifyBtn');
+      const msgDiv = document.getElementById('verifyMessage');
+
+      verifyBtn.classList.add('loading');
+      verifyBtn.disabled = true;
+      verifyBtn.textContent = 'Verifying...';
+
+      msgDiv.className = 'message';
+      msgDiv.style.display = 'none';
+
+      if (!code || code.length < 4) {
+        msgDiv.textContent = "⚠️ Please enter a valid verification code.";
+        msgDiv.className = 'message error';
+        msgDiv.style.display = 'block';
+        
+        verifyBtn.classList.remove('loading');
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = 'Verify & Complete Registration';
+        return;
+      }
+
+      try {
+        const response = await fetch(VERIFY_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            Email: email,
+            VerificationCodeEmail: Number(code),
+            VerificationMode: 100
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          msgDiv.textContent = "🎊 Verification successful! Welcome to JustAttract!";
+          msgDiv.className = 'message success';
+          msgDiv.style.display = 'block';
+          
+          verifyBtn.textContent = 'Redirecting...';
+          setTimeout(() => {
+            window.location.href = "loginfinal.html";
+          }, 2000);
+        } else {
+          throw new Error(result.error || "Verification failed. Please try again.");
+        }
+      } catch (err) {
+        msgDiv.textContent = "❌ " + (err.message || "Network error. Please try again.");
+        msgDiv.className = 'message error';
+        msgDiv.style.display = 'block';
+        
+        verifyBtn.classList.remove('loading');
+        verifyBtn.disabled = false;
+        verifyBtn.textContent = 'Verify & Complete Registration';
+      }
+    });
+
+    document.getElementById('phone').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 6) {
+        value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+      } else if (value.length >= 3) {
+        value = value.replace(/(\d{3})(\d{0,3})/, '($1) $2');
+      }
+      e.target.value = value;
+    });
+
+    document.getElementById('verificationCode').addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/\D/g, '');
+    });
+  </script>
+</body>
+</html>

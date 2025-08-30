@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments - JustAttract</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #5a4fcf;
+            --secondary-color: #6c63ff;
+            --success-color: #2ecc71;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #ffffff 100%);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            width: 100%;
+            max-width: 120rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .back-button {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 1rem 2rem;
+            font-size: 1.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #27ae60;
+            transform: translateY(-0.2rem);
+        }
+
+        .container {
+            max-width: 120rem;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.1);
+        }
+
+        .header-section h1 {
+            font-size: 3.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .attraction-info {
+            font-size: 1.8rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .comment-form-section {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 2rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 1rem 3rem var(--shadow-light);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .form-title {
+            font-size: 2.4rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            padding: 2rem;
+            border: 2px solid var(--border-color);
+            border-radius: 1.5rem;
+            font-size: 1.6rem;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            min-height: 15rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: #fafafa;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+            border-color: var(--success-color);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+            background: white;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--success-color), #27ae60);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 1.5rem 3rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 1rem 2rem rgba(46, 204, 113, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-0.3rem);
+            box-shadow: 0 1.5rem 3rem rgba(46, 204, 113, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .comments-section {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 2rem;
+            box-shadow: 0 1rem 3rem var(--shadow-light);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .comments-title {
+            font-size: 2.4rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comments-count {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .comment-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9ff);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comment-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+        }
+
+        .comment-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .comment-author {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comment-date {
+            font-size: 1.4rem;
+            color: #7f8c8d;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comment-message {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .no-comments {
+            text-align: center;
+            padding: 6rem 2rem;
+            color: #7f8c8d;
+        }
+
+        .no-comments i {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+            opacity: 0.3;
+        }
+
+        .no-comments h3 {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .no-comments p {
+            font-size: 1.6rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1.8rem;
+            color: #7f8c8d;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #c62828;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-2rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+   
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .navbar-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .navbar-logo {
+                font-size: 2.4rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .header-section h1 {
+                font-size: 2.8rem;
+            }
+
+            .attraction-info {
+                font-size: 1.6rem;
+            }
+
+            .comment-form-section,
+            .comments-section {
+                padding: 2rem;
+            }
+
+            .form-title,
+            .comments-title {
+                font-size: 2rem;
+            }
+
+            .comment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .comment-author {
+                font-size: 1.6rem;
+            }
+
+            .comment-message {
+                font-size: 1.5rem;
+            }
+
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-section h1 {
+                font-size: 2.4rem;
+            }
+
+            .comment-card {
+                padding: 2rem;
+            }
+
+            .no-comments i {
+                font-size: 4rem;
+            }
+
+            .no-comments h3 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="attfinal.html" class="navbar-logo">JustAttract</a>
+            <a href="javascript:history.back()" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Attraction
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>Comments</h1>
+            <div class="attraction-info" id="attractionInfo">
+                <i class="fas fa-map-marker-alt"></i> Loading attraction details...
+            </div>
+        </div>
+
+        <div id="messageContainer"></div>
+
+        <div class="comment-form-section" id="commentFormSection">
+            <h2 class="form-title">
+                <i class="fas fa-pen"></i>
+                Add Your Comment
+            </h2>
+            <form id="commentForm">
+                <textarea 
+                    id="commentMessage" 
+                    class="comment-textarea" 
+                    placeholder="Share your thoughts about this attraction... What did you like? Any tips for other visitors?"
+                    required
+                ></textarea>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    Post Comment
+                </button>
+            </form>
+        </div>
+
+        <div class="comments-section">
+            <div class="comments-header">
+                <h2 class="comments-title">
+                    <i class="fas fa-comments"></i>
+                    All Comments
+                </h2>
+                <span class="comments-count" id="commentsCount">0 Comments</span>
+            </div>
+            <div id="commentsContainer">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading comments...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+           const API_BASE_URL = 'https://app-walks-northindia-dev-001-f4cud2g4fsahcpfw.westindia-01.azurewebsites.net';
+
+            
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const attractionId = urlParams.get('attractionId');
+            const action = urlParams.get('action');
+            
+            if (!attractionId) {
+                showError('No attraction specified. Please return to the attractions page.');
+                return;
+            }
+
+     
+            const commentForm = document.getElementById('commentForm');
+            const commentMessage = document.getElementById('commentMessage');
+            const submitBtn = document.getElementById('submitBtn');
+            const commentsContainer = document.getElementById('commentsContainer');
+            const commentsCount = document.getElementById('commentsCount');
+            const attractionInfo = document.getElementById('attractionInfo');
+            const messageContainer = document.getElementById('messageContainer');
+            const commentFormSection = document.getElementById('commentFormSection');
+
+           
+            if (action === 'view') {
+                commentFormSection.style.display = 'none';
+            }
+
+           
+            loadAttractionInfo();
+            loadComments();
+
+       
+            commentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                await submitComment();
+            });
+
+            async function loadAttractionInfo() {
+    try {
+        const token = getAuthToken(); 
+        if (!token) {
+            attractionInfo.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please log in to view attraction details.';
+            return;
+        }
+
+        const response = await fetch(`${API_BASE_URL}/get-attraction-by-id?id=${attractionId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) throw new Error('Failed to load attraction info');
+
+        const attraction = await response.json();
+        const locationText = `${attraction.location?.region || ''}${attraction.location?.region && attraction.location?.city ? ', ' : ''}${attraction.location?.city || ''}${(attraction.location?.region || attraction.location?.city) && attraction.location?.state ? ', ' : ''}${attraction.location?.state || ''}`.trim();
+
+        attractionInfo.innerHTML = `
+            <i class="fas fa-map-marker-alt"></i>
+            <strong>${attraction.name}</strong> - ${locationText}
+        `;
+    } catch (error) {
+        console.error('Error loading attraction info:', error);
+        attractionInfo.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error loading attraction info';
+    }
+}
+
+
+            async function loadComments() {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/comments/by-attraction?attractionId=${attractionId}`);
+                    if (!response.ok) throw new Error('Failed to load comments');
+                    
+                    const data = await response.json();
+                    displayComments(data.data || []);
+                    updateCommentsCount(data.count || 0);
+                } catch (error) {
+                    console.error('Error loading comments:', error);
+                    commentsContainer.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Failed to load comments. Please try again later.
+                        </div>
+                    `;
+                }
+            }
+
+            function displayComments(comments) {
+                if (!comments || comments.length === 0) {
+                    commentsContainer.innerHTML = `
+                        <div class="no-comments">
+                            <i class="fas fa-comments"></i>
+                            <h3>No Comments Yet</h3>
+                            <p>Be the first to share your thoughts about this attraction!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const commentsHTML = comments.map(comment => `
+                    <div class="comment-card">
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <i class="fas fa-user-circle"></i>
+                                ${comment.user?.firstName || 'Anonymous User'}
+                            </div>
+                            <div class="comment-date">
+                                <i class="fas fa-clock"></i>
+                                ${formatDate(comment.createdAt)}
+                            </div>
+                        </div>
+                        <div class="comment-message">
+                            ${escapeHtml(comment.message)}
+                        </div>
+                    </div>
+                `).join('');
+
+                commentsContainer.innerHTML = commentsHTML;
+            }
+
+            function updateCommentsCount(count) {
+                commentsCount.textContent = `${count} Comment${count !== 1 ? 's' : ''}`;
+            }
+
+            async function submitComment() {
+                const message = commentMessage.value.trim();
+                if (!message) {
+                    showError('Please enter a comment message.');
+                    return;
+                }
+
+                const token = getAuthToken();
+                if (!token) {
+                    showError('You must be logged in to post comments.');
+                    setTimeout(() => {
+                        window.location.href = 'loginfinal.html';
+                    }, 2000);
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/comments/add`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            AttractionId: attractionId,
+                            Message: message
+                        })
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            throw new Error('Please log in to post comments.');
+                        }
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Failed to post comment');
+                    }
+
+                    showSuccess('Comment posted successfully!');
+                    commentMessage.value = '';
+                    loadComments(); 
+                    console.error('Error posting comment:', error);
+                    showError(error.message || 'Failed to post comment. Please try again.');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Post Comment';
+                }
+            }
+
+            function getAuthToken() {
+                return localStorage.getItem('jwtToken');
+            }
+
+            function showError(message) {
+                messageContainer.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        ${message}
+                    </div>
+                `;
+                setTimeout(() => {
+                    messageContainer.innerHTML = '';
+                }, 5000);
+            }
+
+            function showSuccess(message) {
+                messageContainer.innerHTML = `
+                    <div class="success-message">
+                        <i class="fas fa-check-circle"></i>
+                        ${message}
+                    </div>
+                `;
+                setTimeout(() => {
+                    messageContainer.innerHTML = '';
+                }, 5000);
+            }
+
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+                
+                if (diffInHours < 24) {
+                    if (diffInHours < 1) {
+                        const diffInMinutes = Math.floor((now - date) / (1000 * 60));
+                        return diffInMinutes < 1 ? 'Just now' : `${diffInMinutes} min ago`;
+                    }
+                    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+                } else {
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                }
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        });
+    </script>
+</body>
+</html>

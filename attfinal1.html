@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Explore Amazing Attractions | JustAttract</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #5a4fcf; /* Dark purple */
+            --secondary-color: #6c63ff; /* Lighter purple */
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --dark-overlay: rgba(0, 0, 0, 0.1); /* Added for image overlay */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            /* Ensures 1rem is 10px, making rem units easier to work with */
+            font-size: 62.5%; 
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden; 
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            width: 100%;
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 15px var(--shadow-medium);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            width: 100%;
+            max-width: 120rem; /* A reasonable max-width for content */
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 2.8rem; /* Adjusted font size */
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            list-style: none;
+            display: flex;
+            gap: 4rem; /* Space between links */
+        }
+
+        .navbar-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.8rem; /* Adjusted font size */
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.5rem;
+            width: 0;
+            height: 0.2rem;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-links li a:hover::after {
+            width: 100%;
+        }
+
+        .navbar-links li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-dropdown .profile-name {
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 1.8rem; /* Adjusted */
+            font-weight: 600;
+            color: white;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: blue; /* Consider changing this to a variable like var(--card-bg) */
+            border-radius: 1.2rem;
+            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1000;
+            min-width: 18rem; /* Adjusted width */
+            padding: 1rem 0;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1.2rem 1.8rem; /* Adjusted padding */
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.6rem; /* Adjusted */
+            transition: background 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--light-bg); /* Changed from --bg-light to var(--light-bg) */
+        }
+
+        .profile-dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .header {
+            background:
+                linear-gradient(to bottom right, rgba(90, 79, 207, 0.65), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80') no-repeat center center / cover;
+            color: white;
+            padding: 14rem 2rem 10rem;
+            text-align: center;
+            width: 100%;
+            max-width: 100%;
+            border-radius: 0;
+            margin-bottom: 4rem;
+            box-shadow: 0 1.2rem 3rem rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 45rem;
+            animation: fadeInHeader 1s ease-out;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-overlay);
+            z-index: 0;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Bring content above overlay */
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 5rem; /* Adjusted font size */
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90vw;
+        }
+
+        .header p {
+            font-size: 2.4rem; /* Adjusted font size */
+            opacity: 0.95; /* Adjusted opacity to a valid range */
+            max-width: 72rem;
+            margin: 0 auto 3rem;
+            color: white;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+            text-overflow: ellipsis;
+        }
+
+        /* Animations */
+        @keyframes fadeInHeader {
+            from {
+                opacity: 0;
+                transform: translateY(-4rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(2.5rem);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-bar {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            width: 100%;
+            max-width: 120rem; /* A reasonable max-width */
+            box-shadow: 0 0.8rem 2rem var(--shadow-light);
+            margin-top: -4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-bar i {
+            font-size: 2.2rem; /* Adjusted icon size */
+        }
+
+        .search-bar input[type="text"],
+        .search-bar select {
+            border: 1px solid var(--border-color);
+            border-radius: 0.8rem;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.6rem; /* Adjusted font size */
+            flex-grow: 1;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M287%2C114.7L158.4%2C15.4c-5.9-5.9-15.4-5.9-21.3%2C0L5.4%2C114.7c-5.9%2C5.9-5.9%2C15.4%2C0%2C21.3h276.9c5.9%2C0%2C5.9-15.4%2C0-21.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1.5rem top 50%;
+            background-size: 1.2rem auto; /* Adjusted size of the dropdown arrow */
+        }
+        
+        .search-bar input[type="text"]::placeholder {
+            color: #b0b0b0;
+        }
+
+        .search-bar input[type="text"]:focus,
+        .search-bar select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.3rem rgba(108, 99, 255, 0.2);
+            outline: none;
+        }
+
+        .search-bar button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.6rem; /* Adjusted font size */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-0.1rem);
+        }
+
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr)); /* Adjusted card width */
+            gap: 3rem; /* Adjusted gap */
+            width: 100%;
+            max-width: 120rem; /* Max width for the grid */
+            padding: 4rem 2rem;
+            margin: 4rem auto 8rem auto; /* Centered margin */
+        }
+
+        .btn-create-attraction {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 3rem;
+            padding: 1.2rem 2.4rem;
+            font-size: 1.8rem; /* Adjusted font size */
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.15);
+            margin-top: 2.4rem;
+            z-index: 10;
+            position: relative;
+        }
+
+        .btn-create-attraction:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-0.4rem);
+        }
+
+        .attraction-card {
+            background-color: var(--card-bg);
+            border-radius: 2.2rem;
+            overflow: hidden;
+            box-shadow: 0 1.4rem 3rem rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 45rem; /* Adjusted height */
+            width: auto; /* Let grid handle width */
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-1rem);
+            box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.14);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 25rem; /* Adjusted height */
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-content {
+            padding: 2.4rem 2rem; /* Adjusted padding */
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 2.2rem; /* Adjusted font size */
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .card-location {
+            font-size: 1.6rem; /* Adjusted font size */
+            color: black;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .card-location i {
+            color: var(--secondary-color);
+            font-size: 1.4rem; /* Adjusted icon size */
+        }
+
+        .card-description {
+            font-size: 1.5rem; /* Adjusted font size */
+            color: black;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            margin-top: auto;
+        }
+
+        .card-detail {
+            flex: 1;
+            text-align: center;
+            padding: 1rem; /* Adjusted padding */
+        }
+
+        .card-detail + .card-detail {
+            border-left: 1px solid var(--border-color);
+        }
+
+        .detail-value {
+            font-size: 1.8rem; /* Adjusted font size */
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .detail-label {
+            font-size: 1.4rem; /* Adjusted font size */
+            color: #888;
+            margin-top: 0.6rem;
+            display: block;
+        }
+
+        .more-details-btn {
+            margin-top: 2rem;
+            padding: 1.2rem 2rem; /* Adjusted padding */
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 1.2rem;
+            font-size: 1.6rem; /* Adjusted font size */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.1);
+        }
+
+        #lightboxModal {
+            position: fixed;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #lightboxImage {
+            max-width: 90vw; /* Adjusted to a more reasonable size */
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 1.2rem;
+            box-shadow: 0 1rem 3rem rgba(0,0,0,0.5);
+            display: block;
+            margin: auto;
+        }
+
+        #lightboxImage:hover {
+            transform: scale(1.02);
+        }
+
+        .more-details-btn i {
+            font-size: 1.3rem;
+        }
+
+        .more-details-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-0.3rem);
+            box-shadow: 0 1rem 2.8rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* No results and loading states */
+        .no-results, .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 5rem;
+            color: #666;
+            font-size: 1.8rem;
+        }
+
+        .loading-spinner {
+            border: 0.4rem solid #f3f3f3;
+            border-top: 0.4rem solid var(--primary-color);
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 3rem; /* Adjusted padding */
+            border-radius: 1.8rem;
+            width: 90vw;
+            max-width: 90rem; /* Adjusted max-width for modal */
+            height: auto; /* Let height adjust to content */
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
+            box-shadow: 0 2rem 5rem rgba(0,0,0,0.3);
+            position: relative;
+            animation: fadeInScale 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem; /* Adjusted gap */
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close-modal {
+            color: #aaa;
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 3.5rem; /* Adjusted font size */
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .modal-header {
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 3.2rem; /* Adjusted font size */
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            font-size: 1.8rem; /* Adjusted font size */
+            color: #666;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .modal-main-info {
+            flex: 2;
+        }
+
+        .modal-image-wrapper {
+            width: 100%;
+            max-height: 40rem; /* Adjusted height */
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        #modalImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-description {
+            font-size: 1.6rem; /* Adjusted font size */
+            color: #444;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .modal-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); /* Adjusted minmax for items */
+            gap: 1.5rem; /* Adjusted gap */
+            margin-bottom: 2rem;
+        }
+
+        .modal-detail-item {
+            background-color: var(--light-bg);
+            padding: 2rem; /* Adjusted padding */
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: inset 0 0 0.5rem rgba(0,0,0,0.05);
+        }
+
+        .modal-detail-item .detail-label {
+            font-size: 1.4rem; /* Adjusted font size */
+            color: #666; /* Adjusted color for better contrast */
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-detail-item .detail-value {
+            font-size: 1.8rem; /* Adjusted font size */
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .modal-sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .modal-section {
+            background-color: var(--light-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0.2rem 1rem rgba(0,0,0,0.05);
+        }
+
+        .modal-section h3 {
+            font-size: 2rem; /* Adjusted font size */
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .modal-section p {
+            font-size: 1.6rem; /* Adjusted font size */
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); /* Adjusted minmax for gallery images */
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 10rem; /* Adjusted height */
+            object-fit: cover;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transform-origin: center center;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.5); /* Adjusted scale for better hover effect */
+            z-index: 10;
+            box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.25);
+            position: relative; 
+        }
+
+     .pagination-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.pagination-controls button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.6rem;
+    border-radius: 0.8rem;
+}
+
+.pagination-controls button:hover {
+    background-color: var(--secondary-color);
+}
+
+.pagination-controls .current-page {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+.pagination-controls .arrow {
+    font-size: 2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 0.8rem 1.4rem;
+}
+
+.pagination-controls .arrow:hover {
+    background-color: var(--secondary-color);
+}
+#reportModal select,
+#reportModal label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    color: #333;
+}
+
+#reportModal select {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 1rem;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: white;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 1.2rem);
+    background-position-y: center;
+    background-size: 1.5rem;
+}
+
+
+.report-attraction-btn {
+    background-color: #f39c12; /* Gold for the report button */
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.report-attraction-btn:hover {
+    background-color: #e67e22; /* Darker shade for hover effect */
+    transform: translateY(-0.3rem);
+}
+
+/* Report Modal Styles */
+#reportModal {
+    position: fixed;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark background for modal overlay */
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+#reportModal .modal-content {
+    background-color: #ffffff; /* White background for the modal */
+    padding: 3rem;
+    border-radius: 1.8rem;
+    width: 70vw; /* Moderate width for the modal */
+    max-width: 50rem; /* Maximum width of the modal */
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fadeInScale 0.3s ease-out;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.comment-attraction-btn {
+    background-color: #2ecc71; /* Green for the comment button */
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.1);
+}
+
+.comment-attraction-btn:hover {
+    background-color: #27ae60; /* Darker shade for hover effect */
+    transform: translateY(-0.3rem);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#reportModal h2 {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+}
+
+#reportModal textarea {
+    width: 100%;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    min-height: 10rem;
+    resize: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+#reportModal button[type="submit"] {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 1.8rem;
+    padding: 1.2rem 2.5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#reportModal button[type="submit"]:hover {
+    background-color: #e67e22;
+}
+
+/* Close Button in Report Modal */
+.close-modal-report {
+    color: #aaa;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal-report:hover,
+.close-modal-report:focus {
+    color: #f39c12;
+}
+
+/* Modal Body Styling */
+#reportModal .modal-content {
+    max-width: 50rem;
+    min-width: 30rem;
+}
+
+/* Make the Report Modal full screen on small devices */
+@media (max-width: 768px) {
+    #reportModal .modal-content {
+        width: 90vw;
+        padding: 2rem;
+    }
+    #reportModal h2 {
+        font-size: 2rem;
+    }
+    #reportModal textarea {
+        font-size: 1.4rem;
+    }
+    #reportModal button[type="submit"] {
+        font-size: 1.4rem;
+    }
+}
+
+
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+            }
+            
+            .navbar-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .navbar-links {
+                margin-top: 1.5rem;
+                gap: 2rem;
+            }
+
+            .navbar-logo {
+                font-size: 2.2rem;
+            }
+            .navbar-links li a {
+                font-size: 1.6rem;
+            }
+
+            .header {
+                padding: 8rem 1.5rem 6rem;
+                margin-bottom: 6rem;
+            }
+
+            .header h1 {
+                font-size: 3.2rem; 
+            }
+
+            .header p {
+                font-size: 1.6rem; 
+            }
+
+            .search-bar {
+                flex-direction: column;
+                padding: 1.5rem;
+                margin-top: -5rem;
+                width: calc(100% - 3rem); 
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+            }
+
+            .search-bar input[type="text"],
+            .search-bar select,
+            .search-bar button,
+            .btn-create-attraction { 
+                width: 100%;
+            }
+
+            .attractions-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                width: calc(100% - 2rem); 
+                margin: 0 auto;
+            }
+
+            .attraction-card {
+                width: auto; /* Allow full width within grid on mobile */
+            }
+
+            .card-title {
+                font-size: 2rem; 
+            }
+
+            .card-location {
+                font-size: 1.5rem; 
+            }
+
+            .card-description {
+                font-size: 1.4rem; 
+            }
+
+            .detail-value {
+                font-size: 1.6rem; 
+            }
+
+            .detail-label {
+                font-size: 1.2rem; 
+            }
+
+            .card-details {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card-detail {
+                width: 100%;
+                text-align: left;
+                border-left: none;
+                padding: 0.5rem 0;
+            }
+
+            .card-detail + .card-detail {
+                border-top: 1px solid var(--border-color);
+            }
+
+            .modal-body {
+                flex-direction: column;
+            }
+
+            .modal-main-info, .modal-sidebar {
+                flex: none;
+                width: 100%;
+            }
+
+            .modal-content {
+                padding: 2rem;
+            }
+
+            .close-modal {
+                top: 1rem;
+                right: 1.5rem;
+                font-size: 3rem;
+            }
+
+            .modal-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Further refinement for very small mobile screens if needed */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.8rem;
+            }
+            .header p {
+                font-size: 1.4rem;
+            }
+            .navbar-logo {
+                font-size: 2rem;
+            }
+            .navbar-links {
+                gap: 1rem;
+            }
+            .navbar-links li a {
+                font-size: 1.4rem;
+            }
+            .search-bar input[type="text"],
+            .search-bar select,
+            .search-bar button,
+            .btn-create-attraction {
+                padding: 1rem 1.5rem;
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="attfinal.html" class="navbar-logo">JustAttract</a>
+            <ul class="navbar-links" id="navbarLinks">
+                </ul>
+        </div>
+    </nav>
+
+    <div class="header">
+        <div class="header-content">
+            <h1>Explore Amazing Attractions</h1>
+            <a href="createAtt.html" class="btn-create-attraction">
+                <i class="fas fa-plus-circle"></i> Create New
+            </a>
+        </div>
+    </div>
+
+    <div class="search-bar">
+        <i class="fas fa-search" style="color: #6c757d;"></i>
+        <input type="text" id="searchTerm" placeholder="Search attractions...">
+        <select id="searchBy">
+            <option value="All Fields">All Fields</option>
+            <option value="name">Name</option>
+            <option value="state">State</option>
+            <option value="city">City</option>
+        </select>
+        <button id="searchBtn">Search</button>
+    </div>
+
+    <div class="attractions-grid" id="attractionsGrid">
+        </div>
+
+    <div id="attractionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">Attraction Name</h2>
+                <p id="modalLocation"><i class="fas fa-map-marker-alt"></i> Location</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-main-info">
+                    <div class="modal-image-wrapper">
+                        <img id="modalImage" src="" alt="Attraction Image">
+                    </div>
+                    <p class="modal-description" id="modalDescription">Detailed description of the attraction.</p>
+                    <div class="modal-details-grid" id="modalDetails">
+                        </div>
+                </div>
+                <div class="modal-sidebar">
+                    <div class="modal-section" id="notToMissSection">
+                        <h3>Not To Miss</h3>
+                        <p id="modalNotToMiss">Key features and highlights.</p>
+                    </div>
+                    <div class="modal-section" id="suggestionsSection">
+                        <h3>Suggestions</h3>
+                        <p id="modalSuggestions">Tips for visitors.</p>
+                    </div>
+                    <div class="modal-section" id="gallerySection">
+                        <h3>Gallery</h3>
+                        <div class="modal-gallery" id="modalGallery">
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+    <button class="comment-attraction-btn" id="modalCommentBtn">
+        <i class="fas fa-comments"></i> Add Comment
+    </button>
+    <button class="comment-attraction-btn" id="modalViewCommentsBtn" style="background-color: #3498db;">
+        <i class="fas fa-eye"></i> View Comments
+    </button>
+    <button class="report-attraction-btn" id="modalReportBtn">
+        <i class="fas fa-flag"></i> Report This Attraction
+    </button>
+</div>
+        </div>
+    </div>
+    <div id="paginationControls" class="pagination-controls"></div>
+
+    <div id="lightboxModal" class="modal">
+        <span class="close-modal" id="closeLightbox">&times;</span>
+        <img id="lightboxImage" src="" alt="Full View">
+    </div>
+
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal-report">&times;</span>
+            <h2>Report Attraction</h2>
+           <form id="reportForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+    <label for="reasonSelect">Reason for Reporting:</label>
+    <select id="reasonSelect" name="reason">
+        <option value="1">Misinformation</option>
+        <option value="2">Does not exist now</option>
+        <option value="3">Improper language</option>
+        <option value="4">Wrong location</option>
+    </select>
+    <button type="submit">Submit Report</button>
+</form>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // **NOTE: For actual production deployment, change this to your live API URL (e.g., 'https://api.yourdomain.com/api/v1')**
+    const API_BASE_URL = 'http://localhost:5190/api/v1';
+
+    // --- DOM Elements ---
+    const searchTermInput = document.getElementById('searchTerm');
+    const searchBySelect = document.getElementById('searchBy');
+    const searchBtn = document.getElementById('searchBtn');
+    const attractionsGrid = document.getElementById('attractionsGrid');
+
+    // Modal elements
+    const attractionModal = document.getElementById('attractionModal');
+    if (attractionModal) {
+        attractionModal.style.display = 'none';
+    }
+    const closeModalBtn = document.querySelector('.close-modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalImage = document.getElementById('modalImage');
+    const modalLocation = document.getElementById('modalLocation');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalDetails = document.getElementById('modalDetails');
+    const modalNotToMiss = document.getElementById('modalNotToMiss');
+    const modalSuggestions = document.getElementById('modalSuggestions');
+    const modalGallery = document.getElementById('modalGallery');
+    const notToMissSection = document.getElementById('notToMissSection');
+    const suggestionsSection = document.getElementById('suggestionsSection');
+    const gallerySection = document.getElementById('gallerySection');
+    const modalReportBtn = document.getElementById('modalReportBtn'); // Reference to the new report button in modal
+
+    // Lightbox elements
+    const lightboxModal = document.getElementById('lightboxModal');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightboxBtn = document.getElementById('closeLightbox');
+
+    // Report Modal elements
+    const reportModal = document.getElementById('reportModal');
+    const closeReportModalBtn = document.querySelector('.close-modal-report');
+    const reportForm = document.getElementById('reportForm');
+    let currentAttractionIdToReport = null;
+
+
+    // Default image fallback (consider a local asset or a more stable CDN for production)
+    const DEFAULT_IMAGE = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUPIfiGgUML8G3ZqsNLHfaCnZK3I5g4tJabQ&s';
+    let currentPage = 1;
+    const pageSize = 12;
+
+    // Attraction type mapping
+    const attractionTypes = {
+        100: 'Cafe',
+        200: 'SeaShore',
+        300: 'Temple',
+        400: 'Trek',
+        500: 'Park',
+        600: 'ChaiTapri',
+        700: 'HostelMess',
+        800: 'Dhaba',
+        900: 'Library',
+        1000: 'SportsGround',
+        1100: 'Other'
+    };
+
+    // --- Event Listeners ---
+
+    checkUserLoginStatus();
+
+    window.handleHelloClick = function (event) {
+        event.preventDefault();
+        window.location.href = 'profile.html';
+    };
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            if (attractionModal) {
+                attractionModal.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('click', (event) => {
+        if (event.target === attractionModal) {
+            attractionModal.style.display = 'none';
+        }
+    });
+
+    if (modalGallery) {
+        modalGallery.addEventListener('click', (e) => {
+            if (e.target.classList.contains('gallery-image')) {
+                if (lightboxImage && lightboxModal) {
+                    lightboxImage.src = e.target.src;
+                    lightboxImage.alt = e.target.alt || 'Gallery Image';
+                    lightboxModal.style.display = 'flex';
+                }
+            }
+        });
+    }
+
+    if (closeLightboxBtn) {
+        closeLightboxBtn.addEventListener('click', () => {
+            if (lightboxModal) {
+                lightboxModal.style.display = 'none';
+            }
+        });
+    }
+
+    if (lightboxModal) {
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target === lightboxModal) {
+                lightboxModal.style.display = 'none';
+            }
+        });
+    }
+
+    // Report Modal: Open when "Report" button inside the DETAILS MODAL is clicked
+    if (modalReportBtn) {
+        modalReportBtn.addEventListener('click', function() {
+            // The attraction ID is already available via currentAttractionIdToReport
+            // set when showAttractionDetails is called.
+            if (currentAttractionIdToReport) {
+                openReportModal(currentAttractionIdToReport);
+            } else {
+                alert("No attraction details available to report.");
+            }
+        });
+    }
+
+    // Report Modal: Close when 'X' is clicked
+    if (closeReportModalBtn) {
+        closeReportModalBtn.addEventListener('click', () => {
+            reportModal.style.display = 'none';
+            reportForm.reset();
+        });
+    }
+
+    // Report Modal: Close when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === reportModal) {
+            reportModal.style.display = 'none';
+            reportForm.reset();
+        }
+    });
+
+    // Report Modal: Handle form submission
+    if (reportForm) {
+     reportForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const reason = parseInt(document.getElementById('reasonSelect').value);
+    if (!reason || reason === 0) {
+        alert("Please select a valid reason for reporting.");
+        return;
+    }
+    if (currentAttractionIdToReport) {
+        reportAttraction(currentAttractionIdToReport, reason);
+    } else {
+        alert("No attraction selected to report.");
+    }
+});
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener('click', loadAttractions);
+    }
+
+    if (searchTermInput) {
+        searchTermInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loadAttractions();
+            }
+        });
+    }
+
+    loadAllAttractions(currentPage);
+
+    // --- API & Utility Functions ---
+
+    function getAuthToken() {
+        return localStorage.getItem('jwtToken');
+    }
+
+    function handleUnauthorized() {
+        alert('Your session has expired or you are not authorized. Please log in again.');
+        localStorage.removeItem('jwtToken');
+        window.location.href = 'loginfinal.html';
+    }
+
+    function updatePaginationControls(totalCount) {
+        const totalPages = Math.ceil(totalCount / pageSize);
+        const paginationContainer = document.getElementById('paginationControls');
+        if (!paginationContainer) return;
+
+        paginationContainer.innerHTML = '';
+
+        const leftArrow = document.createElement('button');
+        leftArrow.classList.add('arrow');
+        leftArrow.innerHTML = '&#8592;';
+        leftArrow.disabled = currentPage === 1;
+        leftArrow.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                loadAttractions();
+            }
+        });
+        paginationContainer.appendChild(leftArrow);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.classList.toggle('current-page', i === currentPage);
+            pageButton.addEventListener('click', () => {
+                currentPage = i;
+                loadAttractions();
+            });
+            paginationContainer.appendChild(pageButton);
+        }
+
+        const rightArrow = document.createElement('button');
+        rightArrow.classList.add('arrow');
+        rightArrow.innerHTML = '&#8594;';
+        rightArrow.disabled = currentPage === totalPages;
+        rightArrow.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                loadAttractions();
+            }
+        });
+        paginationContainer.appendChild(rightArrow);
+    }
+
+    async function loadAllAttractions(pageNumber) {
+        if (attractionsGrid) {
+            attractionsGrid.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading attractions...</p>
+                </div>
+            `;
+        }
+        try {
+            const response = await fetch(`${API_BASE_URL}/get-attraction?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+            if (!response.ok) throw new Error("Failed to fetch all attractions");
+            const data = await response.json();
+            displayAttractions(data.data);
+            updatePaginationControls(data.count);
+        } catch (error) {
+            console.error('Error fetching all attractions:', error);
+            showError(error);
+        }
+    }
+
+    async function loadAttractions() {
+        const searchTerm = searchTermInput ? searchTermInput.value.trim() : '';
+        const searchBy = searchBySelect ? searchBySelect.value : 'All Fields';
+
+        if (!searchTerm) {
+            loadAllAttractions(currentPage);
+            return;
+        }
+
+        if (attractionsGrid) {
+            attractionsGrid.innerHTML = `
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading attractions...</p>
+                </div>
+            `;
+        }
+
+        try {
+            let url = `${API_BASE_URL}/search-attraction`;
+            const params = new URLSearchParams();
+            params.append('searchTerm', searchTerm);
+            if (searchBy && searchBy !== 'All Fields') {
+                params.append('searchBy', searchBy);
+            }
+            params.append('pageNumber', currentPage);
+            params.append('pageSize', pageSize);
+
+            const response = await fetch(`${url}?${params.toString()}`);
+            if (!response.ok) throw new Error("Search request failed");
+
+            const data = await response.json();
+            displayAttractions(data.data);
+            updatePaginationControls(data.count);
+        } catch (error) {
+            console.error('Search error:', error);
+            showError(error);
+        }
+    }
+
+    function showError(error) {
+        if (!attractionsGrid) return;
+
+        attractionsGrid.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 1rem;"></i>
+                <p>Failed to load attractions. Please try again later.</p>
+                <p style="color: #ff6b6b; font-size: 0.9rem; margin-top: 0.5rem;">Error: ${error.message}</p>
+                <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Refresh Page
+                </button>
+            </div>
+        `;
+    }
+
+    function displayAttractions(attractions) {
+        if (!attractionsGrid) return;
+
+        if (!attractions || attractions.length === 0) {
+            attractionsGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-map-marked-alt fa-2x" style="margin-bottom: 1rem;"></i>
+                    <p>No attractions found. Try a different search term.</p>
+                </div>
+            `;
+            return;
+        }
+
+let html = '';
+attractions.forEach(attraction => {
+    const firstImage = attraction.coverImageUrl || attraction.images?.[0]?.url || DEFAULT_IMAGE;
+    const typeName = attractionTypes[attraction.type] || 'Other';
+    const locationText = `${attraction.region || attraction.location?.region || ''}${(attraction.region || attraction.location?.region) && (attraction.city || attraction.location?.city) ? ', ' : ''}${attraction.city || attraction.location?.city || ''}${((attraction.region || attraction.location?.region) || (attraction.city || attraction.location?.city)) && (attraction.state || attraction.location?.state) ? ', ' : ''}${attraction.state || attraction.location?.state || ''}`;
+
+    html += `
+        <div class="attraction-card" data-id="${attraction.id}">
+            <img src="${firstImage}" alt="${attraction.name}" class="card-image" onerror="this.src='${DEFAULT_IMAGE}'">
+            <div class="card-content">
+                <h3 class="card-title">${attraction.name}</h3>
+                <div class="card-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${locationText}</span>
+                </div>
+                <p class="card-description">${attraction.description || 'No description available.'}</p>
+                <div class="card-details">
+                    <div class="card-detail">
+                        <span class="detail-value">${typeName}</span>
+                        <span class="detail-label">Type</span>
+                    </div>
+                </div>
+                <button class="more-details-btn" data-id="${attraction.id}">
+                    <i class="fas fa-info-circle"></i> More Details
+                </button>
+            </div>
+        </div>
+    `;
+});
+attractionsGrid.innerHTML = html;
+
+
+// Button event listeners remain as before...
+document.querySelectorAll('.more-details-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const attractionId = this.getAttribute('data-id');
+        showAttractionDetails(attractionId);
+    });
+});
+
+    }
+
+    async function showAttractionDetails(attractionId) {
+        if (!attractionModal) return;
+
+        // Reset and show loading state
+        if (modalTitle) modalTitle.textContent = 'Loading...';
+        if (modalLocation) modalLocation.textContent = '';
+        if (modalDescription) modalDescription.textContent = 'Loading details...';
+        if (modalImage) {
+            modalImage.src = '';
+            modalImage.alt = '';
+        }
+        if (modalDetails) modalDetails.innerHTML = '';
+        if (modalNotToMiss) modalNotToMiss.textContent = '';
+        if (modalSuggestions) modalSuggestions.textContent = '';
+        if (modalGallery) modalGallery.innerHTML = '';
+        if (notToMissSection) notToMissSection.style.display = 'none';
+        if (suggestionsSection) suggestionsSection.style.display = 'none';
+        if (gallerySection) gallerySection.style.display = 'none';
+
+        // Set the attraction ID for the report button in the modal
+        currentAttractionIdToReport = attractionId;
+        if (modalReportBtn) {
+            // No need to set data-id directly on the button, as currentAttractionIdToReport is used
+            modalReportBtn.style.display = 'inline-block'; // Show the report button once details are loading
+        }
+
+
+        attractionModal.style.display = 'flex';
+
+        try {
+            const token = getAuthToken();
+            const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+            const attractionResponse = await fetch(`${API_BASE_URL}/get-attraction-by-id?id=${attractionId}`, { headers });
+
+            if (!attractionResponse.ok) {
+                if (attractionResponse.status === 401 || attractionResponse.status === 403) {
+                    handleUnauthorized();
+                    return;
+                }
+                throw new Error(`Failed to load attraction details. Status: ${attractionResponse.status}`);
+            }
+
+            const attraction = await attractionResponse.json();
+
+            let createdByText = '';
+            if (attraction.userId && token) {
+                try {
+                    const userResponse = await fetch(`${API_BASE_URL}/get-user-by-id?id=${attraction.userId}`, { headers });
+                    if (userResponse.ok) {
+                        const userData = await userResponse.json();
+                        createdByText = `Created by: ${userData.firstName || 'Unknown User'}`;
+                    } else {
+                        console.warn(`Could not fetch user details for ID: ${attraction.userId}. Status: ${userResponse.status}`);
+                        createdByText = 'Created by: Unknown User';
+                    }
+                } catch (userError) {
+                    console.error(`Error fetching user details for ID ${attraction.userId}:`, userError);
+                    createdByText = 'Created by: Unknown User';
+                }
+            }
+
+            if (modalTitle) {
+                modalTitle.innerHTML = `${attraction.name} ${createdByText ? `<span style="font-size: 0.6em; color: #6c757d; display: block; margin-top: 5px;">${createdByText}</span>` : ''}`;
+            }
+
+            const locationText = `${attraction.location?.region || ''}${attraction.location?.region && attraction.location?.city ? ', ' : ''}${attraction.location?.city || ''}${(attraction.location?.region || attraction.location?.city) && attraction.location?.state ? ', ' : ''}${attraction.location?.state || ''}`.trim();
+
+            if (modalLocation) modalLocation.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${locationText}`;
+
+            if (modalDescription) modalDescription.textContent = attraction.description || 'No description available.';
+
+            const coverImage = attraction.coverImageUrl || attraction.images?.[0]?.url || DEFAULT_IMAGE;
+            if (modalImage) {
+                modalImage.src = coverImage;
+                modalImage.alt = attraction.name;
+                modalImage.onerror = function() { this.src = DEFAULT_IMAGE; };
+            }
+
+            const typeName = attractionTypes[attraction.type] || 'Other';
+         if (modalDetails) {
+    modalDetails.innerHTML = `
+        <div class="modal-detail-item">
+            <div class="detail-label">Type</div>
+            <div class="detail-value">${typeName}</div>
+        </div>
+        ${
+            // For Trek type, show Trek Length
+            ((attraction.type === 400 ||  attraction.type==300) && attraction.lengthIfTrek)
+                ? `<div class="modal-detail-item">
+                        <div class="detail-label">Trek Length</div>
+                        <div class="detail-value">${attraction.lengthIfTrek} km</div>
+                   </div>`
+                : ''
+        }
+        ${
+            // Always show distance from college if present and NOT for treks
+            (attraction.lengthInKm && attraction.type !== 400)
+                ? `<div class="modal-detail-item">
+                        <div class="detail-label">Distance from College</div>
+                        <div class="detail-value">${attraction.lengthInKm} km</div>
+                   </div>`
+                : ''
+        }
+        ${
+            (attraction.location?.instituteName)
+                ? `<div class="modal-detail-item">
+                        <div class="detail-label">Institute</div>
+                        <div class="detail-value">${attraction.location?.instituteName}</div>
+                   </div>`
+                : ''
+        }
+        <div class="modal-detail-item">
+            <div class="detail-label">Added On</div>
+            <div class="detail-value">${new Date(attraction.createdAt).toLocaleDateString()}</div>
+        </div>
+        ${
+            attraction.adminRating
+                ? `<div class="modal-detail-item">
+                        <div class="detail-label">Rating</div>
+                        <div class="detail-value">${attraction.adminRating.toFixed(1)}/5</div>
+                   </div>`
+                : ''
+        }
+    `;
+}
+
+
+
+            if (attraction.notToMiss && notToMissSection && modalNotToMiss) {
+                notToMissSection.style.display = 'block';
+                modalNotToMiss.textContent = attraction.notToMiss;
+            } else if (notToMissSection) {
+                notToMissSection.style.display = 'none';
+            }
+
+            if (attraction.suggestions && suggestionsSection && modalSuggestions) {
+                suggestionsSection.style.display = 'block';
+                modalSuggestions.textContent = attraction.suggestions;
+            } else if (suggestionsSection) {
+                suggestionsSection.style.display = 'none';
+            }
+
+            if (attraction.images && attraction.images.length > 0 && gallerySection && modalGallery) {
+                gallerySection.style.display = 'block';
+                modalGallery.innerHTML = '';
+                attraction.images.forEach(image => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = image.url;
+                    imgElement.alt = image.caption || attraction.name;
+                    imgElement.className = 'gallery-image';
+                    imgElement.onerror = function() { this.src = DEFAULT_IMAGE; };
+                    modalGallery.appendChild(imgElement);
+                });
+            } else if (gallerySection) {
+                gallerySection.style.display = 'none';
+            }
+
+        } catch (error) {
+            console.error('Error loading attraction details:', error);
+            if (modalTitle) modalTitle.textContent = 'Error';
+            if (modalDescription) modalDescription.textContent = 'Failed to load attraction details. Please try again later.';
+            if (modalLocation) modalLocation.textContent = '';
+            if (modalImage) {
+                modalImage.src = DEFAULT_IMAGE;
+                modalImage.alt = 'Error loading image';
+            }
+            if (modalDetails) modalDetails.innerHTML = '';
+            if (notToMissSection) notToMissSection.style.display = 'none';
+            if (suggestionsSection) suggestionsSection.style.display = 'none';
+            if (gallerySection) gallerySection.style.display = 'none';
+            if (modalReportBtn) modalReportBtn.style.display = 'none'; // Hide report button on error
+        }
+    }
+
+    // Open Report Modal function
+function openReportModal(attractionId) {
+    currentAttractionIdToReport = attractionId;
+    reportModal.style.display = 'flex';
+    document.getElementById('reason').value = '';  // Clear the input field when opening the modal
+}
+
+// Handle the report submission
+async function reportAttraction(attractionId, reason) {
+    try {
+        const token = getAuthToken();
+        if (!token) {
+            handleUnauthorized();
+            return;
+        }
+
+        // Sending the report to the backend
+        const response = await fetch(`${API_BASE_URL}/report-attraction`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                AttractionId: attractionId,
+                Reason: reason
+            })
+        });
+
+        if (response.ok) {
+            // Success message
+            alert("Attraction reported successfully.");
+            reportModal.style.display = 'none';
+            reportForm.reset();
+        } else {
+            // If the response is not okay, show the error message from the backend
+            const result = await response.json();
+            alert(result.message || "Error reporting the attraction.");
+        }
+    } catch (error) {
+        console.error("Error reporting attraction:", error);
+        alert("Error reporting the attraction.");
+    }
+}
+
+// Comment buttons event listeners
+const modalCommentBtn = document.getElementById('modalCommentBtn');
+const modalViewCommentsBtn = document.getElementById('modalViewCommentsBtn');
+
+if (modalCommentBtn) {
+    modalCommentBtn.onclick = function() {
+        if (currentAttractionIdToReport) {
+            window.location.href = `comments.html?attractionId=${currentAttractionIdToReport}&action=add`;
+        } else {
+            alert("No attraction selected.");
+        }
+    };
+}
+
+if (modalViewCommentsBtn) {
+    modalViewCommentsBtn.onclick = function() {
+        if (currentAttractionIdToReport) {
+            window.location.href = `comments.html?attractionId=${currentAttractionIdToReport}&action=view`;
+        } else {
+            alert("No attraction selected.");
+        }
+    };
+}
+
+
+    // --- Navbar Login Status Logic ---
+
+    async function checkUserLoginStatus() {
+        const nav = document.getElementById("navbarLinks");
+        if (!nav) return;
+
+        const token = getAuthToken();
+
+        if (!token) {
+            nav.innerHTML = `
+                <li><a href="attfinal.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="Review.html">Reviews</a></li>
+                <li><a href="loginfinal.html">Login</a></li>
+            `;
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/user`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            if (!res.ok) {
+                console.warn("Token expired or invalid. Status:", res.status);
+                throw new Error("Token expired or invalid");
+            }
+
+            const user = await res.json();
+            nav.innerHTML = `
+                <li><a href="attfinal.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="Review.html">Comment</a></li>
+                <li class="profile-dropdown">
+                    <button class="profile-name">Hello, ${user.firstName || user.name || "User"}</button>
+                    <div class="dropdown-menu">
+                      <a href="profile.html" onclick="event.preventDefault(); handleHelloClick(event);">My attraction</a>
+                      <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </li>
+            `;
+        } catch (err) {
+            console.error("Error checking user login status:", err);
+            localStorage.removeItem("jwtToken");
+            localStorage.removeItem('justAttractLoginTime');
+            nav.innerHTML = `
+                <li><a href="attfinal.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="Review.html">Comment</a></li>
+                <li><a href="loginfinal.html">Login</a></li>
+            `;
+        }
+    }
+
+    /**
+     * Logs out the user by removing the JWT token and updating the navbar.
+     */
+    window.logout = function() {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem('justAttractLoginTime'); // Clear login timestamp on logout
+        // The `justAttractJustLoggedIn` flag is short-lived, so no need to clear it here.
+        checkUserLoginStatus(); // Update the navbar to reflect logged-out state
+        alert("You have been logged out successfully."); // Inform the user
+        // Optionally, redirect to the home or login page after logout
+        // window.location.href = 'attractiontest2.html';
+    };
+
+    // Initial check for 'justAttractJustLoggedIn' flag after page load
+    // This part should set the login time if a fresh login occurred and then clear the flag.
+    const justLoggedInInitialCheck = localStorage.getItem('justAttractJustLoggedIn') === 'true';
+    if (justLoggedInInitialCheck) {
+        localStorage.setItem('justAttractLoginTime', Date.now());
+        localStorage.removeItem('justAttractJustLoggedIn'); // Clear the flag immediately after processing
+    }
+});
+
+    </script>
+</body>
+</html>
+ 

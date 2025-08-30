@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Attraction | JustAttract</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5a4fcf;
+            --secondary: #6c63ff;
+            --accent: #ffb300;
+            --light: #ffffff;
+            --dark: #333333;
+            --success: #4caf50;
+            --form-bg: #f8f9fa;
+            --text-dark: #343a40;
+            --text-light-muted: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        .navbar-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-links li a:hover::after {
+            width: 100%;
+        }
+
+        .navbar-links li a:hover {
+            color: var(--secondary);
+        }
+
+        .main-container {
+            width: 95%;
+            max-width: 1200px;
+            background: var(--light);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-grow: 1;
+            margin: 2rem auto;
+            min-height: 700px;
+        }
+
+        .form-panel {
+            background: var(--form-bg);
+            padding: 2.5rem 3rem;
+            width: 100%;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-panel h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-panel .subtitle {
+            font-size: 1.2rem;
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--light);
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M287%2C114.7L158.4%2C15.4c-5.9-5.9-15.4-5.9-21.3%2C0L5.4%2C114.7c-5.9%2C5.9-5.9%2C15.4%2C0%2C21.3h276.9c5.9%2C0%2C5.9-15.4%2C0-21.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.7em top 50%, 0 0;
+            background-size: 0.65em auto, 100%;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+            background-color: var(--light);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .rating-stars {
+            display: flex;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 0.5rem 0.8rem;
+            gap: 0.5rem;
+        }
+
+        .star {
+            font-size: 1.8rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .star.hovered,
+        .star.active {
+            color: #ffc107;
+        }
+
+        .images-container {
+            border: 1px dashed #c2c7cc;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            background-color: var(--light);
+        }
+
+        .image-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .file-upload-wrapper {
+            flex: 2;
+            position: relative;
+        }
+
+        .file-upload-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background-color: var(--light);
+            cursor: pointer;
+        }
+
+        .file-upload-input::-webkit-file-upload-button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+
+        .upload-status {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.2rem;
+        }
+
+        .upload-status.success {
+            color: var(--success);
+        }
+
+        .upload-status.error {
+            color: #dc3545;
+        }
+
+        .upload-status.loading {
+            color: var(--secondary);
+        }
+
+        .caption-input {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            line-height: 1;
+        }
+
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            font-size: 1.5rem;
+            border-radius: 8px;
+            line-height: 1;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+        /* Location Button Styles */
+        .btn-location {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .btn-location:hover {
+            background: linear-gradient(45deg, #218838, #1ea085);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-location:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .location-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .location-container {
+            position: relative;
+        }
+
+        .location-status {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .location-status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .location-status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .location-status.loading {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: block;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .success-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-indicator {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+        }
+
+        .progress-indicator.show {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .form-panel {
+                width: 100%;
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .main-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .form-panel {
+                padding: 1.5rem;
+            }
+
+            .form-panel h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .image-input-group {
+                flex-direction: column;
+            }
+
+            .file-upload-wrapper {
+                flex: none;
+                width: 100%;
+            }
+
+            .caption-input {
+                flex: none;
+                width: 100%;
+            }
+        }
+
+        #successActionButtons {
+            display: flex !important;
+            justify-content: center !important;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="attfinal.html" class="navbar-logo">JustAttract</a>
+            <ul class="navbar-links">
+                <li><a href="attfinal.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="Review.html">Comment</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="form-panel">
+            <h2>Create New Attraction</h2>
+            <p class="subtitle">Share your favorite places with the world</p>
+
+            <div class="success-message" id="successMessage">
+                <span class="success-icon">✓</span>
+                <h3 class="success-title">Attraction Created Successfully!</h3>
+                <p>Thank you for contributing to our community.</p>
+                <p>Your attraction has been added Successfully.</p>
+                <div class="action-buttons" id="successActionButtons">
+                </div>
+            </div>
+
+            <div class="progress-indicator" id="progressIndicator">
+                Uploading images... Please wait.
+            </div>
+
+            <form id="attractionForm" style="display: none;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Attraction Name*</label>
+                        <input type="text" id="name" name="name" required placeholder="Kedarnath">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="description">Description*</label>
+                        <textarea id="description" name="description" required placeholder="Describe the place in detail"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">Attraction Type*</label>
+                        <select id="type" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="100">Cafe</option>
+                            <option value="200">SeaShore</option>
+                            <option value="300">Temple</option>
+                            <option value="400">Trek</option>
+                            <option value="500">Park</option>
+                            <option value="600">ChaiTapri</option>
+                            <option value="700">HostelMess</option>
+                            <option value="800">Dhaba</option>
+                            <option value="900">Library</option>
+                            <option value="1000">SportsGround</option>
+                            <option value="1100">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="distanceToLocation">Distance to Reach Location (km)</label>
+                        <input type="number" step="0.1" id="distanceToLocation" name="distanceToLocation" placeholder="e.g. 10.5">
+                    </div>
+
+                    <div class="form-group" id="trekDistanceGroup">
+                        <label for="trekDistance" id="trekDistanceLabel">Trek Distance (km)</label>
+                        <input type="number" step="0.1" id="trekDistance" name="trekDistance" placeholder="e.g. 5.2">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rating*</label>
+                        <div class="rating-container">
+                            <div class="rating-stars" id="ratingStars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
+                            </div>
+                            <input type="hidden" id="adminRating" name="adminRating" value="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="coverImage">Cover Image*</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="coverImage" name="coverImage" class="file-upload-input" 
+                                   accept="image/*" required>
+                            <div class="upload-status" id="coverImageStatus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notToMiss">Not To Miss</label>
+                        <textarea id="notToMiss" name="notToMiss"
+                            placeholder="What are the must-see features?"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suggestions">Suggestions</label>
+                        <textarea id="suggestions" name="suggestions" placeholder="Any tips for visitors?"></textarea>
+                    </div>
+
+                    <div class="form-group location-container">
+                        <label for="state">State*</label>
+                        <input type="text" id="state" name="state" required placeholder="e.g. Uttarakhand">
+                        <button type="button" id="getLocationBtn" class="btn-location">
+                            <svg class="location-icon" viewBox="0 0 24 24">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                            Auto-fill from Current Location
+                        </button>
+                        <div class="location-status" id="locationStatus"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City/Town*</label>
+                        <input type="text" id="city" name="city" required placeholder="e.g. Almora">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="region">Region*</label>
+                        <input type="text" id="region" name="region" required placeholder="e.g. Kumaon">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="instituteName">Institute Name*</label>
+                        <input type="text" id="instituteName" name="instituteName" required placeholder="NIT UTTARAKHAND">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Additional Images (At least 4 required)*</label>
+                        <div class="images-container" id="imagesContainer">
+                            <div class="image-input-group">
+                                <div class="file-upload-wrapper">
+                                    <input type="file" class="image-file" accept="image/*">
+                                    <div class="upload-status"></div>
+                                </div>
+                                <input type="text" class="caption-input" placeholder="Caption">
+                                <button type="button" class="btn btn-add" onclick="addImageField()">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons" id="formActionButtons">
+                    <button type="button" class="btn" onclick="resetForm()">Reset</button>
+                    <button type="submit" class="btn btn-primary">Create Attraction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://app-walks-northindia-dev-001-f4cud2g4fsahcpfw.westindia-01.azurewebsites.net';
+
+        const BLOB_UPLOAD_URL = `${API_BASE_URL}/api/v1/blob/upload`;
+        const ATTRACTION_CREATE_URL = `${API_BASE_URL}/api/v1/create-attraction`;
+
+        function getAuthToken() {
+            return localStorage.getItem('jwtToken');
+        }
+
+        function handleUnauthorized() {
+            alert('Your session has expired or you are not authorized. Please log in again.');
+            localStorage.removeItem('jwtToken');
+            window.location.href = 'loginfinal.html';
+        }
+
+        class LocationService {
+            constructor() {
+                this.statusElement = document.getElementById('locationStatus');
+                this.buttonElement = document.getElementById('getLocationBtn');
+                this.stateInput = document.getElementById('state');
+                this.cityInput = document.getElementById('city');
+                this.regionInput = document.getElementById('region');
+            }
+
+            showStatus(message, type) {
+                this.statusElement.textContent = message;
+                this.statusElement.className = `location-status ${type}`;
+            }
+
+            hideStatus() {
+                this.statusElement.className = 'location-status';
+            }
+
+            async getCurrentLocation() {
+                return new Promise((resolve, reject) => {
+                    if (!navigator.geolocation) {
+                        reject(new Error('Geolocation is not supported by this browser'));
+                        return;
+                    }
+
+                    const options = {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 300000 
+                    };
+
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude
+                            });
+                        },
+                        (error) => {
+                            let errorMessage = '';
+                            switch (error.code) {
+                                case error.PERMISSION_DENIED:
+                                    errorMessage = 'Location access denied by user';
+                                    break;
+                                case error.POSITION_UNAVAILABLE:
+                                    errorMessage = 'Location information is unavailable';
+                                    break;
+                                case error.TIMEOUT:
+                                    errorMessage = 'Location request timed out';
+                                    break;
+                                default:
+                                    errorMessage = 'An unknown error occurred';
+                                    break;
+                            }
+                            reject(new Error(errorMessage));
+                        },
+                        options
+                    );
+                });
+            }
+
+            async reverseGeocode(latitude, longitude) {
+                try {
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1`
+                    );
+
+                    if (!response.ok) {
+                        throw new Error('Geocoding service unavailable');
+                    }
+
+                    const data = await response.json();
+                    return this.parseLocationData(data);
+                } catch (error) {
+                    try {
+                        const fallbackResponse = await fetch(
+                            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+                        );
+                        
+                        if (fallbackResponse.ok) {
+                            const fallbackData = await fallbackResponse.json();
+                            return this.parseFallbackData(fallbackData);
+                        }
+                    } catch (fallbackError) {
+                        console.error('Fallback geocoding failed:', fallbackError);
+                    }
+                    
+                    throw error;
+                }
+            }
+
+            parseLocationData(data) {
+                const address = data.address || {};
+                
+                return {
+                    state: address.state || address.region || '',
+                    city: address.city || address.town || address.village || address.municipality || '',
+                    region: this.determineRegion(address.state, address.city) || address.county || address.district || ''
+                };
+            }
+
+            parseFallbackData(data) {
+                return {
+                    state: data.principalSubdivision || '',
+                    city: data.city || data.locality || '',
+                    region: data.localityInfo?.administrative?.[0]?.name || ''
+                };
+            }
+
+            determineRegion(state, city) {
+         
+                const regionMap = {
+                    'Uttarakhand': {
+                        'Almora': 'Kumaon',
+                        'Nainital': 'Kumaon',
+                        'Pithoragarh': 'Kumaon',
+                        'Dehradun': 'Garhwal',
+                        'Haridwar': 'Garhwal',
+                        'Chamoli': 'Garhwal',
+                        'Uttarkashi': 'Garhwal'
+                    },
+                    'Himachal Pradesh': {
+                        'Shimla': 'Central Himachal',
+                        'Manali': 'Central Himachal',
+                        'Dharamshala': 'Western Himachal'
+                    }
+                };
+
+                if (regionMap[state] && regionMap[state][city]) {
+                    return regionMap[state][city];
+                }
+
+                return null;
+            }
+
+            async autoFillLocation() {
+                this.buttonElement.disabled = true;
+                this.showStatus('Getting your location...', 'loading');
+
+                try {
+                    const position = await this.getCurrentLocation();
+                    
+                    this.showStatus('Fetching location details...', 'loading');
+                    
+                    const locationData = await this.reverseGeocode(
+                        position.latitude, 
+                        position.longitude
+                    );
+
+                    if (locationData.state) {
+                        this.stateInput.value = locationData.state;
+                    }
+                    if (locationData.city) {
+                        this.cityInput.value = locationData.city;
+                    }
+                    if (locationData.region) {
+                        this.regionInput.value = locationData.region;
+                    }
+
+                    let filledFields = [];
+                    if (locationData.state) filledFields.push('State');
+                    if (locationData.city) filledFields.push('City');
+                    if (locationData.region) filledFields.push('Region');
+
+                    if (filledFields.length > 0) {
+                        this.showStatus(
+                            `✓ Auto-filled: ${filledFields.join(', ')}`, 
+                            'success'
+                        );
+                        
+                        setTimeout(() => {
+                            this.hideStatus();
+                        }, 5000);
+                    } else {
+                        this.showStatus('Location detected but details unavailable', 'error');
+                    }
+
+                } catch (error) {
+                    console.error('Location error:', error);
+                    this.showStatus(`Error: ${error.message}`, 'error');
+                } finally {
+                    this.buttonElement.disabled = false;
+                }
+            }
+        }
+
+        const locationService = new LocationService();
+
+        async function uploadFileToBlob(file, statusElement) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                statusElement.textContent = 'Uploading...';
+                statusElement.className = 'upload-status loading';
+
+                const token = getAuthToken();
+                const response = await fetch(BLOB_UPLOAD_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    statusElement.textContent = 'Upload successful ✓';
+                    statusElement.className = 'upload-status success';
+                    return result.url; 
+                } else {
+                    throw new Error('Upload failed');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                statusElement.textContent = 'Upload failed ✗';
+                statusElement.className = 'upload-status error';
+                return null;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = getAuthToken();
+            const attractionForm = document.getElementById('attractionForm');
+
+            if (!token) {
+                alert('You are not logged in. Please log in first.');
+                window.location.href = 'attfinal.html';
+            } else {
+                attractionForm.style.display = 'block';
+                updateAddButton();
+                initializeRating();
+                
+                document.getElementById('getLocationBtn').addEventListener('click', () => {
+                    locationService.autoFillLocation();
+                });
+                
+                const typeSelect = document.getElementById('type');
+                const trekDistanceGroup = document.getElementById('trekDistanceGroup');
+                const trekDistanceInput = document.getElementById('trekDistance');
+                const trekDistanceLabel = document.getElementById('trekDistanceLabel');
+
+                function updateTrekDistanceField() {
+                    const val = parseInt(typeSelect.value, 10);
+                    if (val === 400 || val === 300) {
+                        trekDistanceInput.required = true;
+                        trekDistanceGroup.style.display = 'block';
+                        trekDistanceLabel.textContent = 'Trek Distance (km)*';
+                    } else {
+                        trekDistanceInput.required = false;
+                        trekDistanceInput.value = '';
+                        trekDistanceGroup.style.display = 'none';
+                    }
+                }
+                typeSelect.addEventListener('change', updateTrekDistanceField);
+                updateTrekDistanceField();
+            }
+        });
+
+        const stars = document.querySelectorAll('.star');
+        const adminRatingInput = document.getElementById('adminRating');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                adminRatingInput.value = value;
+
+                stars.forEach((s, index) => {
+                    if (index < value) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        function initializeRating() {
+            stars.forEach(star => star.classList.remove('active'));
+            adminRatingInput.value = '0';
+        }
+
+        function addImageField() {
+            const container = document.getElementById('imagesContainer');
+
+            const existingGroups = container.querySelectorAll('.image-input-group');
+            existingGroups.forEach(group => {
+                const addBtn = group.querySelector('.btn-add');
+                if (addBtn) addBtn.remove();
+            });
+
+            const div = document.createElement('div');
+            div.className = 'image-input-group';
+            div.innerHTML = `
+                <div class="file-upload-wrapper">
+                    <input type="file" class="image-file" accept="image/*">
+                    <div class="upload-status"></div>
+                </div>
+                <input type="text" class="caption-input" placeholder="Caption">
+                <button type="button" class="btn btn-remove" onclick="this.parentElement.remove(); updateAddButton()">×</button>
+            `;
+
+            container.appendChild(div);
+            updateAddButton();
+        }
+
+        function updateAddButton() {
+            const container = document.getElementById('imagesContainer');
+            const groups = container.querySelectorAll('.image-input-group');
+            const lastGroup = groups[groups.length - 1];
+
+            if (lastGroup && !lastGroup.querySelector('.btn-add')) {
+                const addBtn = document.createElement('button');
+                addBtn.type = 'button';
+                addBtn.className = 'btn btn-add';
+                addBtn.textContent = '+';
+                addBtn.onclick = addImageField;
+                lastGroup.appendChild(addBtn);
+            }
+        }
+
+        function validateForm() {
+            const errors = [];
+
+            const requiredFields = [
+                { id: 'name', name: 'Attraction Name' },
+                { id: 'description', name: 'Description' },
+                { id: 'type', name: 'Attraction Type' },
+                { id: 'state', name: 'State' },
+                { id: 'city', name: 'City' },
+                { id: 'region', name: 'Region' },
+                { id: 'instituteName', name: 'Institute Name' }
+            ];
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                if (!element.value.trim()) {
+                    errors.push(`${field.name} is required`);
+                }
+            });
+
+            const rating = parseInt(document.getElementById('adminRating').value);
+            if (rating === 0) {
+                errors.push('Please select a rating');
+            }
+
+            const type = parseInt(document.getElementById('type').value);
+            if ((type === 400 || type === 300) && !document.getElementById('trekDistance').value) {
+                errors.push('Trek distance is required for Trek and Temple types');
+            }
+
+            const coverImageFile = document.getElementById('coverImage').files[0];
+            if (!coverImageFile) {
+                errors.push('Cover image is required');
+            }
+
+            const imageGroups = document.querySelectorAll('.image-input-group');
+            let imageCount = 0;
+            
+            imageGroups.forEach(group => {
+                const fileInput = group.querySelector('.image-file');
+                if (fileInput.files[0]) {
+                    imageCount++;
+                }
+            });
+
+            if (imageCount < 4) {
+                errors.push('At least 4 additional images are required');
+            }
+
+            return errors;
+        }
+
+        document.getElementById('attractionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const validationErrors = validateForm();
+            if (validationErrors.length > 0) {
+                alert('Please fix the following errors:\n\n' + validationErrors.join('\n'));
+                return;
+            }
+
+            const submitButton = e.target.querySelector('[type="submit"]');
+            const progressIndicator = document.getElementById('progressIndicator');
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'Uploading Images...';
+            progressIndicator.classList.add('show');
+
+            try {
+                const coverImageFile = document.getElementById('coverImage').files[0];
+                const coverImageStatus = document.getElementById('coverImageStatus');
+                const coverImageUrl = await uploadFileToBlob(coverImageFile, coverImageStatus);
+                
+                if (!coverImageUrl) {
+                    alert('Failed to upload cover image. Please try again.');
+                    return;
+                }
+
+                const imageGroups = document.querySelectorAll('.image-input-group');
+                let uploadPromises = [];
+
+                imageGroups.forEach(group => {
+                    const fileInput = group.querySelector('.image-file');
+                    const captionInput = group.querySelector('.caption-input');
+                    const statusElement = group.querySelector('.upload-status');
+                    
+                    if (fileInput.files[0]) {
+                        const uploadPromise = uploadFileToBlob(fileInput.files[0], statusElement)
+                            .then(url => {
+                                if (url) {
+                                    return {
+                                        url: url,
+                                        caption: captionInput.value || ''
+                                    };
+                                }
+                                return null;
+                            });
+                        uploadPromises.push(uploadPromise);
+                    }
+                });
+
+                const uploadResults = await Promise.all(uploadPromises);
+                const validImages = uploadResults.filter(img => img !== null);
+
+                if (validImages.length < 4) {
+                    alert('Some image uploads failed. Please check and try again.');
+                    return;
+                }
+
+                submitButton.textContent = 'Creating Attraction...';
+
+                const attractionData = {
+                    Name: document.getElementById('name').value,
+                    Type: parseInt(document.getElementById('type').value) || 0,
+                    Description: document.getElementById('description').value,
+                    LengthInKm: document.getElementById('distanceToLocation').value ? parseFloat(document.getElementById('distanceToLocation').value) : null,
+                    LengthIfTrek: document.getElementById('trekDistance').value ? parseFloat(document.getElementById('trekDistance').value) : null,
+                    CoverImageUrl: coverImageUrl,
+                    AdminRating: parseInt(document.getElementById('adminRating').value) || 0,
+                    NotToMiss: document.getElementById('notToMiss').value,
+                    Suggestions: document.getElementById('suggestions').value,
+                    State: document.getElementById('state').value,
+                    City: document.getElementById('city').value,
+                    Region: document.getElementById('region').value,
+                    InstituteName: document.getElementById('instituteName').value,
+                    Images: validImages
+                };
+
+                const token = getAuthToken();
+                const response = await fetch(ATTRACTION_CREATE_URL, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`, 
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify(attractionData)
+                });
+
+                if (response.ok) {
+                    document.getElementById('attractionForm').style.display = 'none';
+                    document.getElementById('formActionButtons').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    progressIndicator.classList.remove('show');
+
+                    const successActionButtons = document.getElementById('successActionButtons');
+                    let createAnotherButton = document.getElementById('createAnotherBtn');
+                    
+                    if (!createAnotherButton) {
+                        createAnotherButton = document.createElement('button');
+                        createAnotherButton.id = 'createAnotherBtn';
+                        createAnotherButton.textContent = 'Create Another Attraction';
+                        createAnotherButton.className = 'btn btn-primary';
+                        createAnotherButton.onclick = () => {
+                            resetForm();
+                            document.getElementById('successMessage').style.display = 'none';
+                            document.getElementById('formActionButtons').style.display = 'flex';
+                            document.getElementById('formActionButtons').style.justifyContent = 'flex-end';
+                            createAnotherButton.remove();
+                        };
+                        successActionButtons.appendChild(createAnotherButton);
+                    }
+                    successActionButtons.style.display = 'flex';
+                    successActionButtons.style.justifyContent = 'center';
+
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error: ${errorData.message || 'Failed to create attraction'}`);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while creating the attraction');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Create Attraction';
+                progressIndicator.classList.remove('show');
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('attractionForm').reset();
+            initializeRating();
+
+            locationService.hideStatus();
+
+            const imagesContainer = document.getElementById('imagesContainer');
+            imagesContainer.innerHTML = `
+                <div class="image-input-group">
+                    <div class="file-upload-wrapper">
+                        <input type="file" class="image-file" accept="image/*">
+                        <div class="upload-status"></div>
+                    </div>
+                    <input type="text" class="caption-input" placeholder="Caption">
+                    <button type="button" class="btn btn-add" onclick="addImageField()">+</button>
+                </div>`;
+
+            document.getElementById('coverImageStatus').textContent = '';
+            document.getElementById('coverImageStatus').className = 'upload-status';
+
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('attractionForm').style.display = 'block';
+            document.getElementById('formActionButtons').style.display = 'flex';
+            document.getElementById('formActionButtons').style.justifyContent = 'flex-end';
+
+            const createAnotherButton = document.getElementById('createAnotherBtn');
+            if (createAnotherButton) {
+                createAnotherButton.remove();
+            }
+
+            updateAddButton();
+        }
+    </script>
+</body>
+
+</html>
